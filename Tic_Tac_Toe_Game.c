@@ -16,7 +16,9 @@ int find_winning_move(char board[3][3], char player)
             int win = check_win(board, player);
             board[row][col] = ' ';
             if (win)
+            {
                 return pos;
+            }
         }
     }
     return 0;
@@ -25,16 +27,28 @@ int find_winning_move(char board[3][3], char player)
 int minimax(char board[3][3], int depth, int isMaximizing)
 {
     if (check_win(board, 'O'))
+    {
         return 10 - depth;
+    }
     if (check_win(board, 'X'))
+    {
         return depth - 10;
+    }
     int draw = 1;
     for (int i = 0; i < 3; i++)
+    {
         for (int j = 0; j < 3; j++)
+        {
             if (board[i][j] == ' ')
+            {
                 draw = 0;
+            }
+        }
+    }
     if (draw)
+    {
         return 0;
+    }
 
     int best;
     if (isMaximizing)
@@ -50,7 +64,9 @@ int minimax(char board[3][3], int depth, int isMaximizing)
                 int score = minimax(board, depth + 1, 0);
                 board[row][col] = ' ';
                 if (score > best)
+                {
                     best = score;
+                }
             }
         }
     }
@@ -67,7 +83,9 @@ int minimax(char board[3][3], int depth, int isMaximizing)
                 int score = minimax(board, depth + 1, 1);
                 board[row][col] = ' ';
                 if (score < best)
+                {
                     best = score;
+                }
             }
         }
     }
@@ -110,15 +128,23 @@ void display_board(char board[3][3])
         {
             int pos = i * 3 + j + 1;
             if (board[i][j] == ' ')
+            {
                 printf(" %d ", pos);
+            }
             else
+            {
                 printf(" %c ", board[i][j]);
+            }
             if (j != 2)
+            {
                 printf("|");
+            }
         }
         printf("\n");
         if (i != 2)
+        {
             printf("---|---|---\n");
+        }
     }
     printf("\n");
 }
@@ -128,14 +154,22 @@ int check_win(char board[3][3], char player)
     for (int i = 0; i < 3; i++)
     {
         if (board[i][0] == player && board[i][1] == player && board[i][2] == player)
+        {
             return 1;
+        }
         if (board[0][i] == player && board[1][i] == player && board[2][i] == player)
+        {
             return 1;
+        }
     }
     if (board[0][0] == player && board[1][1] == player && board[2][2] == player)
+    {
         return 1;
+    }
     if (board[0][2] == player && board[1][1] == player && board[2][0] == player)
+    {
         return 1;
+    }
     return 0;
 }
 
@@ -146,7 +180,9 @@ int check_draw(char board[3][3])
         for (int j = 0; j < 3; j++)
         {
             if (board[i][j] == ' ')
+            {
                 return 0;
+            }
         }
     }
     return 1;
@@ -210,27 +246,45 @@ int main()
                     // Easy: random
                     int empty[9], count = 0;
                     for (int i = 0; i < 3; i++)
+                    {
                         for (int j = 0; j < 3; j++)
+                        {
                             if (board[i][j] == ' ')
+                            {
                                 empty[count++] = i * 3 + j + 1;
+                            }
+                        }
+                    }
                     if (count > 0)
+                    {
                         choice = empty[rand() % count];
+                    }
                 }
                 else if (difficulty == MEDIUM)
                 {
                     // Medium: win if possible, block user, else random
                     choice = find_winning_move(board, 'O');
                     if (!choice)
+                    {
                         choice = find_winning_move(board, 'X');
+                    }
                     if (!choice)
                     {
                         int empty[9], count = 0;
                         for (int i = 0; i < 3; i++)
+                        {
                             for (int j = 0; j < 3; j++)
+                            {
                                 if (board[i][j] == ' ')
+                                {
                                     empty[count++] = i * 3 + j + 1;
+                                }
+                            }
+                        }
                         if (count > 0)
+                        {
                             choice = empty[rand() % count];
+                        }
                     }
                 }
                 else if (difficulty == IMPOSSIBLE)
@@ -280,9 +334,13 @@ int main()
             {
                 display_board(board);
                 if (mode == 1 && player == 'O')
+                {
                     printf("Computer (O) wins!\n");
+                }
                 else
+                {
                     printf("Player %c wins!\n", current);
+                }
                 game_over = 1;
             }
             else if (check_draw(board))
@@ -294,12 +352,16 @@ int main()
 
             // Switch player
             if (!game_over)
+            {
                 player = (player == 'X') ? 'O' : 'X';
+            }
         }
 
         // If user chose to restart, skip the replay prompt and restart immediately
         if (game_over == 2)
+        {
             continue;
+        }
 
         printf("Do you want to play again? (Y/N): ");
         scanf(" %c", &play_again);
