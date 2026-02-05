@@ -1,5 +1,6 @@
 # Object file
 *.o
 
-# Ada Library Information
-*.ali
+# Executables
+*.exe
+Tic_Tac_Toe_Game.exe
