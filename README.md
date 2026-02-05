@@ -1,4 +1,4 @@
-# ❌⭕ C Tic-Tac-Toe with Minimax AI
+# ❌⭕ C Tic-Tac-Toe
 
 A high-performance console-based Tic-Tac-Toe game written in C. It features a smart AI opponent that calculates the optimal move using the Minimax algorithm.
 
